@@ -115,7 +115,7 @@ string convertInt(int number)
 LibIR_PWM::LibIR_PWM()
 {
 	//if (load_dt("am33xx_pwm") && load_dt("bone_pwm_P8_13"))
-	if (load_dt("BB_BONE_IR"))
+	if (load_dt("BB-BONE-IR"))
 	{
 		string ocp = file_find("/sys/devices", "ocp.");
 		_pwm_test = file_find(ocp, "pwm_test_P8_13.");

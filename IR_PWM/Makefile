@@ -1,7 +1,7 @@
 lib:
 	-mkdir ./build
 	g++ -c -o ./build/libIR_PWM.o ./libIR_PWM.cc
-	ar rcs libIR_PWM.a libIR_PWM.o
+	ar rcs ./build/libIR_PWM.a ./build/libIR_PWM.o
 
 all: lib
 
