@@ -45,20 +45,27 @@ using namespace std;
 
 LibIR::IRSend::IRSend()
 {
-	if (!this->gpio.isActive())
+    if (!this->gpio.isActive())
     {
-		GPIO_ERROR("Invalid or Inactive GPIO Module");
-		return;
+	GPIO_ERROR("Invalid or Inactive GPIO Module");
+	return;
     }
 
-    this->gpio.configurePin( SEND_PIN_1, Beagle_GPIO::kOUTPUT );
-    this->gpio.configurePin( SEND_PIN_2, Beagle_GPIO::kOUTPUT );
-    this->gpio.configurePin( SEND_PIN_3, Beagle_GPIO::kOUTPUT );
-    this->gpio.configurePin( RECV_PIN,   Beagle_GPIO::kINPUT );
+    this->loop = uv_default_loop();
+
+    this->gpio.configurePin( LibIR::IRSend::SEND_PIN_1, Beagle_GPIO::kOUTPUT );
+    this->gpio.configurePin( LibIR::IRSend::SEND_PIN_2, Beagle_GPIO::kOUTPUT );
+    this->gpio.configurePin( LibIR::IRSend::SEND_PIN_3, Beagle_GPIO::kOUTPUT );
+    this->gpio.configurePin( LibIR::IRSend::RECV_PIN,   Beagle_GPIO::kINPUT );
     
-    this->gpio.writePin( SEND_PIN_1, 0);
-    this->gpio.writePin( SEND_PIN_2, 0);
-    this->gpio.writePin( SEND_PIN_3, 0);
+    this->gpio.writePin( LibIR::IRSend::SEND_PIN_1, 0);
+    this->gpio.writePin( LibIR::IRSend::SEND_PIN_2, 0);
+    this->gpio.writePin( LibIR::IRSend::SEND_PIN_3, 0);
+}
+
+LibIR::IRSend::~IRSend()
+{
+
 }
 
 // ------------------------
@@ -183,8 +190,8 @@ void LibIR::IRSend::sendNEC(unsigned long data, int nbits, unsigned int pin)
     uv_work_t req;
     req.data = request;
 
-    uv_queue_work(this->loop, &req, sendNEC, finished);
-    uv_run(this->loop, UV_RUN_DEFAULT);
+    uv_queue_work(uv_default_loop(), &req, sendNEC, finished);
+    uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 }
 
 void LibIR::IRSend::sendSony(unsigned long data, int nbits, unsigned int pin)

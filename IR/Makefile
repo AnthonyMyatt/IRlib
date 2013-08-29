@@ -1,8 +1,12 @@
+TOP = $(shell pwd)
+BuildDir = $(TOP)/build
+
 lib:
-	-mkdir ./build
-	g++ -L../IR_PWM/build -lIR_PWM -luv -I../IR_PWM -c -o ./build/libIR.o ./libIR.cc
-	g++ -c -o ./build/Beagle_GPIO.o ./Beagle_GPIO.cc
-	ar rcs ./build/libIR.a ./build/libIR.o ./build/Beagle_GPIO.o
+	-mkdir $(BuildDir)
+	g++ -c libIR_PWM.cc -o $(BuildDir)/libIR_PWM.o
+	g++ -c libIR.cc -luv -o $(BuildDir)/libIR.o
+	g++ -c Beagle_GPIO.cc -o $(BuildDir)/Beagle_GPIO.o
+	ar rcs $(BuildDir)/libIR.a $(BuildDir)/*.o
 
 all: lib
 

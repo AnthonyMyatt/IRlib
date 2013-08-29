@@ -8,7 +8,7 @@
 
 #include <uv.h>
 
-#include <libIR_PWM.h>
+#include "libIR_PWM.h"
 #include "Beagle_GPIO.hh"
 
 #include "libIRInt.h"
@@ -27,7 +27,12 @@ namespace LibIR
 	public:
 		IRSend();
 		~IRSend();
-		
+	
+		static const unsigned int SEND_PIN_1;
+		static const unsigned int SEND_PIN_2;
+		static const unsigned int SEND_PIN_3;
+		static const unsigned int RECV_PIN;
+
 		void sendNEC(unsigned long data, int nbits, unsigned int pin);
   		void sendSony(unsigned long data, int nbits, unsigned int pin);
   		// Neither Sanyo nor Mitsubishi send is implemented yet
@@ -52,11 +57,6 @@ namespace LibIR
 		LibIR_PWM   pwm;      // PWM Library
 		uv_loop_t   *loop;    // LibUV Loop
 
-		static const unsigned int SEND_PIN_1;
-		static const unsigned int SEND_PIN_2;
-		static const unsigned int SEND_PIN_3;
-		static const unsigned int RECV_PIN;
-		
 		static void sendNEC(uv_work_t* req);
     		static void sendSony(uv_work_t* req);
     		static void sendRaw(uv_work_t* req);
