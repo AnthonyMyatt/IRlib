@@ -7,9 +7,9 @@ const unsigned int LibIR::IRsend::RECV_PIN   = Beagle_GPIO::P8_18;
 
 using namespace std;
 
-LibIR::IRSend::IRSend()
+LibIR::IRsend::IRsend()
 {
-	if (!this->gpio.isActive())
+    if (!this->gpio.isActive())
     {
 	GPIO_ERROR("Invalid or Inactive GPIO Module");
 	return;
@@ -66,11 +66,11 @@ bool LibIR::IRsend::enableIROut(int khz)
 
 void LibIR::IRsend::sendNEC(unsigned long data, int nbits, unsigned int pin)
 {
-	if (!self->enableIROut(38))
+    if (!this->enableIROut(38))
     {
         return;
     }
-    self->mark(NEC_HDR_MARK, pin);
+    this->mark(NEC_HDR_MARK, pin);
     self->space(NEC_HDR_SPACE, pin);
     for (int i = 0; i < nbits; i++)
     {
@@ -90,12 +90,12 @@ void LibIR::IRsend::sendNEC(unsigned long data, int nbits, unsigned int pin)
     self->space(0, pin);
 }
 
-void LibIR::IRsend::sendSony(unsigned long data, int nbits)
+void LibIR::IRsend::sendSony(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRsend::sendRaw(vector<unsigned int> buf, int len, int hz)
+void LibIR::IRsend::sendRaw(vector<unsigned int> buf, int hz, unsigned int pin)
 {
 	if (!self->enableIROut(hz))
     {
@@ -116,32 +116,32 @@ void LibIR::IRsend::sendRaw(vector<unsigned int> buf, int len, int hz)
     self->space(0, pin);
 }
 
-void LibIR::IRsend::sendRC5(unsigned long data, int nbits)
+void LibIR::IRsend::sendRC5(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRsend::sendRC6(unsigned long data, int nbits)
+void LibIR::IRsend::sendRC6(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRsend::sendDISH(unsigned long data, int nbits)
+void LibIR::IRsend::sendDISH(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRsend::sendSharp(unsigned long data, int nbits)
+void LibIR::IRsend::sendSharp(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRsend::sendPanasonic(unsigned int address, unsigned long data)
+void LibIR::IRsend::sendPanasonic(unsigned int address, unsigned long data, unsigned int pin)
 {
 
 }
 
-void LibIR::IRsend::sendJVC(unsigned long data, int nbits, int repeat)
+void LibIR::IRsend::sendJVC(unsigned long data, int nbits, int repeat, unsigned int pin)
 {
 
 }

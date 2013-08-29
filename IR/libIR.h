@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+#include <uv.h>
+
 #include <libIR_PWM.h>
 #include "Beagle_GPIO.hh"
 
@@ -13,13 +15,13 @@
 
 //#define DEBUG
 
-#include "debug.h"
+//#include "debug.h"
 
 #define GPIO_OFFSET 100 // The GPIO set method takes 100us to execute, therefore Mark/Space methods must accomodate for this delay
 
 using namespace std;
 
-namespace libIR
+namespace LibIR
 {
 	class IRsend {
 	public:
