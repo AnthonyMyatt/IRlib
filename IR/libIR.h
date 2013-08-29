@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+#include <uv.h>
+
 #include <libIR_PWM.h>
 #include "Beagle_GPIO.hh"
 
@@ -21,10 +23,10 @@ using namespace std;
 
 namespace libIR
 {
-	class IRsend {
+	class IRSend {
 	public:
-		IRsend();
-		~IRsend();
+		IRSend();
+		~IRSend();
 		
 		void sendNEC(unsigned long data, int nbits, unsigned int pin);
   		void sendSony(unsigned long data, int nbits, unsigned int pin);
@@ -54,6 +56,18 @@ namespace libIR
 		static const unsigned int SEND_PIN_2;
 		static const unsigned int SEND_PIN_3;
 		static const unsigned int RECV_PIN;
+		
+		static void sendNEC(uv_work_t* req);
+    	static void sendSony(uv_work_t* req);
+    	static void sendRaw(uv_work_t* req);
+    	static void sendRC5(uv_work_t* req);
+    	static void sendRC6(uv_work_t* req);
+    	static void sendDISH(uv_work_t* req);
+    	static void sendSharp(uv_work_t* req);
+    	static void sendPanasonic(uv_work_t* req);
+    	static void sendJVC(uv_work_t* req);
+
+    	static void finished(uv_work_t* req);
 	};
 }
 #endif
