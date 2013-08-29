@@ -1,14 +1,14 @@
 #include "libIR.h"
 
-const unsigned int LibIR::IRsend::SEND_PIN_1 = Beagle_GPIO::P8_12;
-const unsigned int LibIR::IRsend::SEND_PIN_2 = Beagle_GPIO::P8_14;
-const unsigned int LibIR::IRsend::SEND_PIN_3 = Beagle_GPIO::P8_16;
-const unsigned int LibIR::IRsend::RECV_PIN   = Beagle_GPIO::P8_18;
+const unsigned int LibIR::IRSend::SEND_PIN_1 = Beagle_GPIO::P8_12;
+const unsigned int LibIR::IRSend::SEND_PIN_2 = Beagle_GPIO::P8_14;
+const unsigned int LibIR::IRSend::SEND_PIN_3 = Beagle_GPIO::P8_16;
+const unsigned int LibIR::IRSend::RECV_PIN   = Beagle_GPIO::P8_18;
 
 // This defines the base structure passed to all uv_work threads
 struct req_data
 {
-    LibIR::IRsend* self;
+    LibIR::IRSend* self;
     unsigned int pin;
 };
 
@@ -103,7 +103,7 @@ void LibIR::IRSend::sendNEC(uv_work_t* req)
 {
     Generic_req* request = (Generic_req*)req->data;
 
-    IRsend* self = request->self;
+    LibIR::IRSend* self = request->self;
 
     unsigned long data = request->data;
     int nbits = request->nbits;
@@ -137,7 +137,7 @@ void LibIR::IRSend::sendRaw(uv_work_t* req)
 {    
     Raw_req* request = (Raw_req*)req->data;
     
-    IRsend* self = request->self;
+    LibIR::IRSend* self = request->self;
     
     vector<unsigned int> buf = request->buf;
     int len = request->len;
@@ -163,7 +163,7 @@ void LibIR::IRSend::sendRaw(uv_work_t* req)
     self->space(0, pin);
 }
 
-void LibIR::IRSend::finished(uv_work_t* req)
+void LibIR::IRSend::finished(uv_work_t* req, int status)
 {
 	
 }
@@ -184,56 +184,56 @@ void LibIR::IRSend::sendNEC(unsigned long data, int nbits, unsigned int pin)
     req.data = request;
 
     uv_queue_work(this->loop, &req, sendNEC, finished);
-    uv_run(this->loop);
+    uv_run(this->loop, UV_RUN_DEFAULT);
 }
 
-void LibIR::IRSend::sendSony(unsigned long data, int nbits)
+void LibIR::IRSend::sendSony(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRSend::sendRaw(vector<unsigned int> buf, int len, int hz)
+void LibIR::IRSend::sendRaw(vector<unsigned int> buf, int len, int hz, unsigned int pin)
 {
 	Raw_req* request = new Raw_req;
     request->self = this;
     request->buf = buf;
     request->len = len;
-    request->hz = freq;
+    request->hz = hz;
     request->pin = pin;
     
     uv_work_t req;
     req.data = request;
     
     uv_queue_work(this->loop, &req, sendRaw, finished);
-    uv_run(this->loop);
+    uv_run(this->loop, UV_RUN_DEFAULT);
 }
 
-void LibIR::IRSend::sendRC5(unsigned long data, int nbits)
+void LibIR::IRSend::sendRC5(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRSend::sendRC6(unsigned long data, int nbits)
+void LibIR::IRSend::sendRC6(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRSend::sendDISH(unsigned long data, int nbits)
+void LibIR::IRSend::sendDISH(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRSend::sendSharp(unsigned long data, int nbits)
+void LibIR::IRSend::sendSharp(unsigned long data, int nbits, unsigned int pin)
 {
 
 }
 
-void LibIR::IRSend::sendPanasonic(unsigned int address, unsigned long data)
+void LibIR::IRSend::sendPanasonic(unsigned int address, unsigned long data, unsigned int pin)
 {
 
 }
 
-void LibIR::IRSend::sendJVC(unsigned long data, int nbits, int repeat)
+void LibIR::IRSend::sendJVC(unsigned long data, int nbits, int repeat, unsigned int pin)
 {
 
 }

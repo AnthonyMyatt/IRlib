@@ -21,7 +21,7 @@
 
 using namespace std;
 
-namespace libIR
+namespace LibIR
 {
 	class IRSend {
 	public:
@@ -33,7 +33,7 @@ namespace libIR
   		// Neither Sanyo nor Mitsubishi send is implemented yet
   		//  void sendSanyo(unsigned long data, int nbits);
   		//  void sendMitsubishi(unsigned long data, int nbits);
-  		void sendRaw(vector<unsigned int> buf, int hz, unsigned int pin);
+  		void sendRaw(vector<unsigned int> buf, int len, int hz, unsigned int pin);
   		void sendRC5(unsigned long data, int nbits, unsigned int pin);
   		void sendRC6(unsigned long data, int nbits, unsigned int pin);
   		void sendDISH(unsigned long data, int nbits, unsigned int pin);
@@ -58,16 +58,16 @@ namespace libIR
 		static const unsigned int RECV_PIN;
 		
 		static void sendNEC(uv_work_t* req);
-    	static void sendSony(uv_work_t* req);
-    	static void sendRaw(uv_work_t* req);
-    	static void sendRC5(uv_work_t* req);
-    	static void sendRC6(uv_work_t* req);
-    	static void sendDISH(uv_work_t* req);
-    	static void sendSharp(uv_work_t* req);
-    	static void sendPanasonic(uv_work_t* req);
-    	static void sendJVC(uv_work_t* req);
+    		static void sendSony(uv_work_t* req);
+    		static void sendRaw(uv_work_t* req);
+    		static void sendRC5(uv_work_t* req);
+    		static void sendRC6(uv_work_t* req);
+    		static void sendDISH(uv_work_t* req);
+    		static void sendSharp(uv_work_t* req);
+    		static void sendPanasonic(uv_work_t* req);
+    		static void sendJVC(uv_work_t* req);
 
-    	static void finished(uv_work_t* req);
+    		static void finished(uv_work_t* req, int status);
 	};
 }
 #endif
